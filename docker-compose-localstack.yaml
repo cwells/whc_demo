@@ -1,0 +1,21 @@
+services:
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME:-localstack-main}"
+    image: localstack/localstack-pro 
+    ports:
+    - "127.0.0.1:4566:4566"            # LocalStack Gateway
+    - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+    - "127.0.0.1:443:443"              # LocalStack HTTPS Gateway (Pro)
+    environment:
+    - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN:?} 
+    # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+    - DEBUG=${DEBUG:-0}
+    - PERSISTENCE=${PERSISTENCE:-0}
+    - PROVIDER_OVERRIDE_APIGATEWAY=next_gen
+    volumes:
+    - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+    - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    - /var/run/docker.sock:/var/run/docker.sock
+    cap_add:
+    - SYS_ADMIN
+    - NET_ADMIN
