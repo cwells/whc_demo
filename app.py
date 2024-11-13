@@ -2,6 +2,7 @@ import os
 from functools import partial
 
 from apig_wsgi import make_lambda_handler
+
 # import awsgi
 import dash_bootstrap_components as dbc
 import dash_leaflet as dl
@@ -183,6 +184,7 @@ def main_layout(df, lang=DEFAULT_LANGUAGE, *args, **kwargs) -> list:
 def application(*args, **kwargs) -> Dash:
     """Generate the Dash app."""
 
+    desc = "WHC Demo App"
     df = import_dataframe(WHC_DATA)
 
     server = flask.Flask(__name__)
@@ -199,24 +201,39 @@ def application(*args, **kwargs) -> Dash:
         pages_folder="",
         suppress_callback_exceptions=True,  # necessary for generated components
         serve_locally=True,
+        meta_tags=[
+            {"name": "description", "content": desc}
+        ],
     )
 
-    register_page("home", path=f"/", layout=partial(main_layout, df))
-
-    @app.callback(
-        Output("map_layout", "children"),
-        Input("url", "search"),
-        prevent_initial_call=True,
+    register_page(
+        "home",
+        path=f"/",
+        layout=partial(main_layout, df),
+        meta_tags=[
+            {"name": "description", "content": desc}
+        ],
     )
-    def update_map_layout(search):
-        url = URL(search)
-        lang = url.query.get("lang", DEFAULT_LANGUAGE)
-        return map_layout(df, lang=lang)
+
+    app.dataframe = df
+    app.description = desc
 
     return app
 
 
-if __name__ == "__main__":
-    app = application()
-    app.run_server(host="0.0.0.0", port=8000, debug=DEBUG, use_reloader=DEBUG)
+app = application()
 
+
+@app.callback(
+    Output("map_layout", "children"),
+    Input("url", "search"),
+    prevent_initial_call=True,
+)
+def update_map_layout(search):
+    url = URL(search)
+    lang = url.query.get("lang", DEFAULT_LANGUAGE)
+    return map_layout(app.dataframe, lang=lang)
+
+
+if __name__ == "__main__":
+    app.run_server(host="0.0.0.0", port=8000, debug=DEBUG, use_reloader=DEBUG)
