@@ -21,7 +21,7 @@ http://whc-app.us-west-2.elasticbeanstalk.com/
   ```
   python -m venv venv
   . venv/bin/activate
-  python -m pip install -r requirements.txt
+  python -m pip install -r requirements-dev.txt
   DEBUG=1 python app.py
   deactivate
   ```
@@ -72,3 +72,9 @@ to skip those tests.
 # Metrics
 
 Prometheus metrics are available at `/metrics`.
+
+# TODO
+
+- Serve static assets from a CDN
+- Filter sensitive info from Prometheus stats (e.g. Python version)
+- ALB w/ HTTP/S
