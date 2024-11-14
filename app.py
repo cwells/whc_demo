@@ -100,6 +100,11 @@ def import_dataframe(filename: str, lang: str = DEFAULT_LANGUAGE) -> pd.DataFram
     df["lat"] = df["latitude"]
     df["lon"] = df["longitude"]
 
+    # fall back to "en" for missing translations
+    for lang in ALL_LANGUAGES:
+        for col in "short_description", "name":
+            df[f'{col}_{lang}'] = df[f'{col}_{lang}'].fillna(df[f"{col}_en"])
+
     return df
 
 

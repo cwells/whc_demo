@@ -1,4 +1,4 @@
-from ..app import import_dataframe, WHC_DATA
+from ..app import import_dataframe, WHC_DATA, ALL_LANGUAGES
 
 
 def test_import_dataframe():
@@ -41,3 +41,13 @@ def test_import_dataframe():
     has = set(df.columns.tolist())
 
     assert len(needs - has) == 0
+
+def test_for_null_values_in_descriptions_and_names():
+    """ Ensure descriptions and names have values """
+
+    df = import_dataframe(WHC_DATA)
+
+    for lang in ALL_LANGUAGES:
+        for col in "short_description", "name":
+            assert df[f"{col}_{lang}"].all()
+
