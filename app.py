@@ -1,9 +1,6 @@
 import os
 from functools import partial
 
-from apig_wsgi import make_lambda_handler
-
-# import awsgi
 import dash_bootstrap_components as dbc
 import dash_leaflet as dl
 import dash_leaflet.express as dlx
