@@ -1,3 +1,6 @@
+![This should be a screenshot.](images/map.jpg)
+
+
 # Live demo
 
 http://whc-app.us-west-2.elasticbeanstalk.com/
@@ -51,7 +54,7 @@ Then you can run the test suite with
 pytest tests
 ```
 
-The integration tests requires a Webdriver to be installed. On 
+The integration tests requires a [WebDriver](https://www.selenium.dev/documentation/webdriver/) to be installed. On 
 Fedora you can run
 
 ```
