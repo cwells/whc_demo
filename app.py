@@ -127,7 +127,7 @@ def map_layout(df: pd.DataFrame, lang: str) -> Component:
         worldCopyJump=True,
         children=[
             dl.TileLayer(),
-            dl.LocateControl(locateOptions={"enableHighAccuracy": True}),
+            # dl.LocateControl(locateOptions={"enableHighAccuracy": True}), # requires HTTP/S
             dl.GeoJSON(
                 data=sites,
                 id="sites",
