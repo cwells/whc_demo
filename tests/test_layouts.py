@@ -1,6 +1,6 @@
 from dash.development.base_component import Component
 
-from ..app import map_layout, import_dataframe, WHC_DATA
+from ..app import map_layout, main_layout, import_dataframe, WHC_DATA
 
 
 def recurse(lst, test):
@@ -18,6 +18,16 @@ def test_map_layout():
 
     df = import_dataframe(WHC_DATA)
     layout = map_layout(df, lang="en")
+
+    assert len(layout)
+    assert all(recurse(layout, test=lambda i: isinstance(i, Component)))
+
+
+def test_main_layout():
+    """ Ensure the main_layout returns one or more Components """
+
+    df = import_dataframe(WHC_DATA)
+    layout = main_layout(df, lang="en")
 
     assert len(layout)
     assert all(recurse(layout, test=lambda i: isinstance(i, Component)))
