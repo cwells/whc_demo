@@ -1,6 +1,11 @@
 name: Run Test Suite
 
-on: push
+on:
+  push:
+    paths-ignore:
+    - 'images/**'
+    - '**.md'
+
 
 permissions:
   id-token: write
@@ -21,22 +26,22 @@ jobs:
         working-directory: .
     
     steps:
-      - name: Checkout files
-        uses: actions/checkout@v4
+    - name: Checkout files
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install chromium-driver
-          pip install --upgrade pip
-          pip install -r requirements-dev.txt
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install chromium-driver
+        pip install --upgrade pip
+        pip install -r requirements-dev.txt
 
-      - name: Run Tests
-        run: |
-          coverage run -m pytest tests --headless
-          coverage report -m
+    - name: Run Tests
+      run: |
+        coverage run -m pytest tests --headless
+        coverage report -m
