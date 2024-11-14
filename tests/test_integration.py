@@ -5,8 +5,8 @@ from ..app import app
 
 
 def test_meta_description(dash_duo):
-    """ Check to see if the <meta description> element is present and valid. """
-    
+    """Check to see if the <meta description> element is present and valid."""
+
     el = "meta[name=description]:not([content=''])"
 
     dash_duo.start_server(app)

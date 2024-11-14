@@ -6,7 +6,7 @@ from ..app import update_map_layout
 
 
 def test_update_map_layout_callback():
-    """ Test the update_map_layout callback """
+    """Test the update_map_layout callback"""
 
     def run_callback():
         context_value.set(AttributeDict(**{"triggered_inputs": [{"url": "search"}]}))
@@ -14,6 +14,5 @@ def test_update_map_layout_callback():
 
     ctx = copy_context()
     output = ctx.run(run_callback)
-    
+
     assert isinstance(output, list)
-    
