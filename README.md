@@ -65,3 +65,7 @@ pytest -k 'not test_meta_description'
 ```
 
 to skip those tests.
+
+# Metrics
+
+Prometheus metrics are available at `/metrics`.

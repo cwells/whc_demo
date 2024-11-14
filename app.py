@@ -222,7 +222,7 @@ def application(*args, **kwargs) -> Dash:
 
 
 app = application()
-
+server = app.server
 
 @app.callback(
     Output("map_layout", "children"),
