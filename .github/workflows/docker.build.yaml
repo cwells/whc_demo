@@ -1,11 +1,12 @@
 name: Build Docker Images
 
+# Trigger workflow after test suite completes successfully
 on:
   workflow_run:
     workflows: [Run Test Suite]
-    types:
-      - completed
+    types: [completed]
 
+# Set permissions for accessing repository and pushing packages
 permissions:
   contents: read
   packages: write
@@ -23,6 +24,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # Set up QEMU for multi-architecture container builds
       - name: Set up QEMU
         id: qemu
         uses: docker/setup-qemu-action@master
@@ -39,6 +41,7 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v3
 
+      # Cache Docker build layers to speed up subsequent builds
       - name: Cache Docker layers
         uses: actions/cache@v4
         with:

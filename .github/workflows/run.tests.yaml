@@ -2,25 +2,24 @@ name: Run Test Suite
 
 on:
   push:
+    branches:
+    - master       # Only run tests on master
     paths-ignore:
-    - 'images/**'
-    - '**.md'
+    - 'images/**'  # Ignore changes in images directory
+    - '**.md'      # Ignore documentation changes
 
-
+# Set permissions for accessing repository 
 permissions:
-  id-token: write
   contents: read
-  packages: write
+    
+env:
+  PYTHON_VERSION: '3.12'
 
 jobs:
   run-tests:
     name: Test Suite
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: write
-    
     defaults:
       run:
         working-directory: .
@@ -32,7 +31,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: ${{ env.PYTHON_VERSION }}
 
     - name: Install dependencies
       run: |
@@ -41,6 +40,7 @@ jobs:
         pip install --upgrade pip
         pip install -r requirements-dev.txt
 
+    # Run tests with coverage reporting
     - name: Run Tests
       run: |
         coverage run -m pytest tests --headless
