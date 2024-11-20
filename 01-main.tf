@@ -24,7 +24,7 @@ data "git_repository" "repo" {
 data "template_file" "Dockerrun" {
   template = "${file("${path.module}/Dockerrun.aws.tpl")}"
   vars = {
-    image = "${local.gh_repository_name}:${local.image_tag}"
+    image = "${local.gh_repository_name}:${var.image_tag}"
   }
 }
 
